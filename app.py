@@ -15,8 +15,8 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"]='1'
 GOOGLE_CLIENT_ID = os.getenv("CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 GOOGLE_DISCOVERY_URL = (
-        "https://accounts.google.com/.well-known/openid-configuration"
-        )
+		"https://accounts.google.com/.well-known/openid-configuration"
+		)
 
 
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
@@ -28,6 +28,10 @@ app = Flask(__name__)
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+
+app.config.update(dict(
+  PREFERRED_URL_SCHEME = 'https'
+))
 
 app.secret_key = os.urandom(24)
 
@@ -43,11 +47,12 @@ def login():
 	google_provider_cfg = get_google_provider_cfg()
 	auth_endpoint = google_provider_cfg["authorization_endpoint"]
 
-    BASE_URL = "https://www.trydisco.net/login"
+	# BASE_URL = "https://www.trydisco.net/login"
 
 	request_uri = client.prepare_request_uri(
 		auth_endpoint,
-		redirect_uri = BASE_URL + "/callback",
+		redirect_uri = request.base_url + "/callback",
+		# redirect_uri = request.base_url + "/callback",
 		scope = ["openid", "email", "profile"]
 		)
 	return redirect(request_uri)
