@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, url_for, session
+from flask import Flask, redirect, request, url_for, session, render_template
 from flask_session import Session
 
 from oauthlib.oauth2 import WebApplicationClient
@@ -29,16 +29,17 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 
-app.config.update(dict(
-  PREFERRED_URL_SCHEME = 'https'
-))
+# app.config.update(dict(
+#   PREFERRED_URL_SCHEME = 'https'
+# ))
 
 app.secret_key = os.urandom(24)
 
 @app.route("/")
 def index():
 	if not session.get("email"):
-		return '<a href="/login">Login</a>'
+		return render_template("index.html")
+		# return '<a href="/login">Login</a>'
 	else:
 		return session["email"]
 
@@ -49,9 +50,13 @@ def login():
 
 	# BASE_URL = "https://www.trydisco.net/login"
 
+	BASE_URL = request.base_url
+	BASE_URL.replace("https", "http")
+	BASE_URL.replace("http", "https")
+
 	request_uri = client.prepare_request_uri(
 		auth_endpoint,
-		redirect_uri = request.base_url + "/callback",
+		redirect_uri = BASE_URL + "/callback",
 		# redirect_uri = request.base_url + "/callback",
 		scope = ["openid", "email", "profile"]
 		)
