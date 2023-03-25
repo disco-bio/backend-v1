@@ -56,11 +56,15 @@ def login():
 
 	print("redirect_uri", BASE_URL+"/callback")
 
+
+
+	redirect_uri_custom = request.base_url + "/callback"
+
 	request_uri = client.prepare_request_uri(
 		auth_endpoint,
-		redirect_uri = BASE_URL + "/callback",
+		# redirect_uri = BASE_URL + "/callback",
 		# redirect_uri="https://www.trydisco.net/login/callback"
-		# redirect_uri = request.base_url + "/callback",
+		redirect_uri = redirect_uri_custom.replace("http://", "https://"),
 		scope = ["openid", "email", "profile"]
 		)
 	return redirect(request_uri)
