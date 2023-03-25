@@ -54,10 +54,12 @@ def login():
 	BASE_URL.replace("https", "http")
 	BASE_URL.replace("http", "https")
 
+	print("redirect_uri", BASE_URL+"/callback")
+
 	request_uri = client.prepare_request_uri(
 		auth_endpoint,
-		# redirect_uri = BASE_URL + "/callback",
-		redirect_uri="https://www.trydisco.net/login/callback"
+		redirect_uri = BASE_URL + "/callback",
+		# redirect_uri="https://www.trydisco.net/login/callback"
 		# redirect_uri = request.base_url + "/callback",
 		scope = ["openid", "email", "profile"]
 		)
@@ -68,6 +70,9 @@ def callback():
 	code = request.args.get("code")
 	google_provider_cfg = get_google_provider_cfg()
 	token_endpoint = google_provider_cfg["token_endpoint"]
+
+	print("redirect_url", request.base_url)
+
 	token_url, headers, body = client.prepare_token_request(
 		token_endpoint,
 		authorization_response=request.url,
