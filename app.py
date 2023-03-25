@@ -4,6 +4,8 @@ from flask_session import Session
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 
+from pymongo import MongoClient
+
 from dotenv import load_dotenv
 import os
 import json
@@ -19,7 +21,11 @@ GOOGLE_DISCOVERY_URL = (
 		)
 
 
-client = WebApplicationClient(GOOGLE_CLIENT_ID)
+MONGODB_URI = os.getenv("MONGODB_URI")
+
+oauth_client = WebApplicationClient(GOOGLE_CLIENT_ID)
+pymongo_client = MongoClient()
+
 
 def get_google_provider_cfg():
 	return requests.get(GOOGLE_DISCOVERY_URL).json()
@@ -60,7 +66,7 @@ def login():
 
 	redirect_uri_custom = request.base_url + "/callback"
 
-	request_uri = client.prepare_request_uri(
+	request_uri = oauth_client.prepare_request_uri(
 		auth_endpoint,
 		# redirect_uri = BASE_URL + "/callback",
 		# redirect_uri="https://www.trydisco.net/login/callback"
@@ -77,7 +83,7 @@ def callback():
 
 	print("redirect_url", request.base_url)
 
-	token_url, headers, body = client.prepare_token_request(
+	token_url, headers, body = oauth_client.prepare_token_request(
 		token_endpoint,
 		authorization_response=request.url.replace("http://", "https://"),
 		redirect_url=request.base_url.replace("http://", "https://"),
@@ -89,20 +95,23 @@ def callback():
 		data=body,
 		auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET)
 		)
-	client.parse_request_body_response(json.dumps(token_response.json()))
+	oauth_client.parse_request_body_response(json.dumps(token_response.json()))
 
 	userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
-	uri, headers, body = client.add_token(userinfo_endpoint)
+	uri, headers, body = oauth_client.add_token(userinfo_endpoint)
 	userinfo_response = requests.get(uri, headers=headers, data=body)
+
+	print("keys:", userinfo_response.json().keys())
 
 	if userinfo_response.json().get("email_verified"):
 		unique_id = userinfo_response.json()["sub"]
 		users_email = userinfo_response.json()["email"]
 		users_name = userinfo_response.json()["given_name"]
+		users_photo_uri = userinfo_response.json()["picture"]
 	else:
 		return "User email not available or not verified by Google.", 400
 
-	print(unique_id, users_email, users_name)
+	print(unique_id, users_email, users_name, users_photo_uri)
 
 	session["email"] = users_email
 
