@@ -43,9 +43,11 @@ def login():
 	google_provider_cfg = get_google_provider_cfg()
 	auth_endpoint = google_provider_cfg["authorization_endpoint"]
 
+    BASE_URL = "https://www.trydisco.net/login"
+
 	request_uri = client.prepare_request_uri(
 		auth_endpoint,
-		redirect_uri = request.base_url + "/callback",
+		redirect_uri = BASE_URL + "/callback",
 		scope = ["openid", "email", "profile"]
 		)
 	return redirect(request_uri)
@@ -92,4 +94,4 @@ def logout():
 	return redirect(url_for("index"))
 
 if __name__ == "__main__":
-	app.run(debug=True, port=5000)
+	app.run(debug=True, port=5000, ssl_context="adhoc")
