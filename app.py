@@ -50,11 +50,11 @@ def login():
 
 	# BASE_URL = "https://www.trydisco.net/login"
 
-	BASE_URL = request.base_url
-	BASE_URL.replace("https", "http")
-	BASE_URL.replace("http", "https")
+	# BASE_URL = request.base_url
+	# BASE_URL.replace("https", "http")
+	# BASE_URL.replace("http", "https")
 
-	print("redirect_uri", BASE_URL+"/callback")
+	# print("redirect_uri", BASE_URL+"/callback")
 
 
 
@@ -79,8 +79,8 @@ def callback():
 
 	token_url, headers, body = client.prepare_token_request(
 		token_endpoint,
-		authorization_response=request.url,
-		redirect_url=request.base_url,
+		authorization_response=request.url.replace("http://", "https://"),
+		redirect_url=request.base_url.replace("http://", "https://"),
 		code=code
 		)
 	token_response = requests.post(
