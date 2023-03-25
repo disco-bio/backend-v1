@@ -35,9 +35,6 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 
-# app.config.update(dict(
-#   PREFERRED_URL_SCHEME = 'https'
-# ))
 
 app.secret_key = os.urandom(24)
 
@@ -45,7 +42,6 @@ app.secret_key = os.urandom(24)
 def index():
 	if not session.get("email"):
 		return render_template("index.html")
-		# return '<a href="/login">Login</a>'
 	else:
 		return session["email"]
 
@@ -54,22 +50,10 @@ def login():
 	google_provider_cfg = get_google_provider_cfg()
 	auth_endpoint = google_provider_cfg["authorization_endpoint"]
 
-	# BASE_URL = "https://www.trydisco.net/login"
-
-	# BASE_URL = request.base_url
-	# BASE_URL.replace("https", "http")
-	# BASE_URL.replace("http", "https")
-
-	# print("redirect_uri", BASE_URL+"/callback")
-
-
-
 	redirect_uri_custom = request.base_url + "/callback"
 
 	request_uri = oauth_client.prepare_request_uri(
 		auth_endpoint,
-		# redirect_uri = BASE_URL + "/callback",
-		# redirect_uri="https://www.trydisco.net/login/callback"
 		redirect_uri = redirect_uri_custom.replace("http://", "https://"),
 		scope = ["openid", "email", "profile"]
 		)
