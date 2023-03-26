@@ -48,7 +48,7 @@ PyJWT==2.6.0
 pymongo==4.3.3
 pyOpenSSL==23.1.0
 python-dateutil==2.8.2
-pywin32==306
+python-dotenv==1.0.0
 qiskit==0.42.1
 qiskit-aer==0.12.0
 qiskit-ibmq-provider==0.20.2

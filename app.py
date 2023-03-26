@@ -7,7 +7,7 @@ import requests
 from pymongo import MongoClient
 # import asyncio
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from gremlin_python.driver import client, serializer
 
 
@@ -17,7 +17,7 @@ import os
 import json
 import sys
 
-# load_dotenv()
+load_dotenv()
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"]='1'
 
