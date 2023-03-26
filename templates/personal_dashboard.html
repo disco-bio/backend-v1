@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Personal Dashboard</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+		.discoResultCard {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		#discoMedicationResults {
+			padding-left: 3%;
+			padding-right: 3%;
+		}
+
+		#discoResultsPageHeading {
+			padding-left: 3%;
+			padding-right: 3%;
+			padding-top: 3%;
+			padding-bottom: 5%;
+		}
+
+		.btn {
+			margin: 3px;
+		}
+
+	</style>
+
 </head>
 <body>
 
-<h1>Personal Dashboard</h1>
+<div id="discoResultsPageHeading">
+	<h1>Personal Dashboard</h1>
+</div>
 
+
+<div id="discoMedicationResults">
+</div>
+
+<script type="text/javascript">
+
+
+	const savedMedication = {{saved_medication | safe}}
+
+	function createCardHtml(drugName, publicationsUri, conditionName) {
+		return `<div class="card discoResultCard">
+		<div class="card-body">
+		<h3>${drugName}</h3>
+		<p><i>${conditionName}</i></p>
+		<p>Summary</p>
+		<a class="btn btn-outline-secondary" href="${publicationsUri}" target="_blank">See publications</a>
+		<a class="btn btn-outline-secondary disabled">Contact researchers</a>
+
+		</div>
+		</div>`
+	}
+
+	for (let i=0; i<savedMedication.length; i++) {
+		document.getElementById("discoMedicationResults").innerHTML += createCardHtml(savedMedication[i].medName, savedMedication[i].publicationsUri, savedMedication[i].conditionName)
+	}
+
+</script>
 
 </body>
 </html>

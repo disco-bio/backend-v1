@@ -205,6 +205,21 @@ def views_results():
 		return "User did not submit a valid POST request", 500
 
 
+@app.route("/views/personal_dashboard")
+def views_personal_dashboard():
+
+	if session.get("uuid") is not None:
+
+		user = pymongo_client.discoV1Test.users.find_one({"uuid": session["uuid"]})
+
+		saved_medication = user["savedMedication"]
+
+		return render_template("personal_dashboard.html", saved_medication=saved_medication)
+
+	else:
+
+		return redirect(url_for("index"))
+
 @app.route("/login")
 def login():
 	google_provider_cfg = get_google_provider_cfg()
