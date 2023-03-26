@@ -61,7 +61,7 @@ if sys.platform == "win32":
 local_client = client.Client(GREMLIN_URI, "g", username=GREMLIN_USER, password=GREMLIN_PASSWORD, message_serializer=serializer.GraphSONSerializersV2d0())
 
 
-dfs_until_drug(local_client, "Malignant neoplasm of lung")
+# dfs_until_drug(local_client, "Malignant neoplasm of lung")
 
 
 
