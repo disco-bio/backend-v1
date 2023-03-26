@@ -50,14 +50,14 @@
 	const serverResults = {{results | safe}}
 	console.log(serverResults);
 
-	function createCardHtml(drugName) {
+	function createCardHtml(drugName, publicationsUri) {
 		return `<div class="card discoResultCard">
 		<div class="card-body">
 		<h3>${drugName}</h3>
 		<p>Summary</p>
-		<a class="btn btn-outline-info">See publications</a>
-		<a class="btn btn-outline-info disabled">Contact researchers</a>
-		<a class="btn btn-outline-info">Bookmark</a>
+		<a class="btn btn-outline-secondary" href="${publicationsUri}" target="_blank">See publications</a>
+		<a class="btn btn-outline-secondary disabled">Contact researchers</a>
+		<a class="btn btn-outline-secondary">Bookmark</a>
 
 		</div>
 		</div>`
@@ -65,7 +65,7 @@
 
 
 	for (let i=0; i<serverResults.data.length; i++) {
-		document.getElementById("discoResults").innerHTML += createCardHtml(serverResults.data[i].drugName);
+		document.getElementById("discoResults").innerHTML += createCardHtml(serverResults.data[i].drugName, serverResults.data[i].publicationsUri);
 	}
 
 

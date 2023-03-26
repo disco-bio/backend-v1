@@ -127,11 +127,25 @@ def views_results():
 		pprint(results)
 
 
+		viewed_drugs = []
+
 		processed_results = {"data":[]}
 		for item in results:
-			temp_dict = {"drugName": item["id"]}
-			processed_results["data"].append(temp_dict)
 
+			if item["id"] not in viewed_drugs:
+
+				temp_dict = {
+					"drugName": item["id"],
+					"publicationsUri": f"https://pubmed.ncbi.nlm.nih.gov/?term={item['id']}"
+					}
+				processed_results["data"].append(temp_dict)
+
+
+				viewed_drugs.append(item["id"])
+
+
+		pprint(processed_results)
+		
 		return render_template("results.html", results=processed_results)
 	else:
 		return "User did not submit a valid POST request", 500
