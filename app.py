@@ -5,7 +5,7 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 
 from pymongo import MongoClient
-import asyncio
+# import asyncio
 
 from dotenv import load_dotenv
 from gremlin_python.driver import client, serializer
@@ -55,13 +55,13 @@ GREMLIN_URI = os.getenv("GREMLIN_URI")
 GREMLIN_USER = os.getenv("GREMLIN_USER")
 GREMLIN_PASSWORD = os.getenv("GREMLIN_PASSWORD")
 
-if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+# if sys.platform == "win32":
+    # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 local_client = client.Client(GREMLIN_URI, "g", username=GREMLIN_USER, password=GREMLIN_PASSWORD, message_serializer=serializer.GraphSONSerializersV2d0())
 
 
-# dfs_until_drug(local_client, "Malignant neoplasm of lung")
+dfs_until_drug(local_client, "Malignant neoplasm of lung")
 
 
 
