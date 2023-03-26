@@ -14,6 +14,7 @@ from gremlin_python.driver import client, serializer
 from pprint import pprint
 
 from src.traversals import dfs_until_drug, traverse_from_condition_until_drug
+from src.database_functions import create_user
 
 import os
 import json
@@ -114,6 +115,21 @@ def index():
 	else:
 		return session["uuid"]
 
+@app.route("/internal/add_bookmark", methods=["POST"])
+def internal_add_bookmark():
+	if session.get("uuid"):
+		bookmark_dict = {
+			"medName": "string",
+			"medInfo": "string",
+			"conditionName": "string",
+			"medContact": "string",
+			"publicationsUri": "string"
+		}
+		return "done", 200
+	else:
+		return "error", 500
+
+
 @app.route("/views/search")
 def views_search():
 	return render_template("search.html")
@@ -204,6 +220,16 @@ def callback():
 	print(unique_id, users_email, users_name, users_photo_uri)
 
 	session["uuid"] = unique_id
+
+	pprint(pymongo_client.discoV1Test.users.find_one({"uuid": unique_id}))
+
+	if pymongo_client.discoV1Test.users.find_one({"uuid": unique_id}) is not None:
+		print("found!")
+		return redirect(url_for("index"))
+
+	else:
+		create_user(pymongo_client, unique_id, users_email, users_name, users_photo_uri)
+
 
 	return redirect(url_for("index"))
 

@@ -7,8 +7,8 @@ def create_user(mongo_client, uuid, email, name, photoUri):
 		"savedMedication": []
 	}
 
-	discoV1Prod = mongo_client.discoV1Prod
-	users = discoV1Prod.users
+	discoV1Test = mongo_client.discoV1Test
+	users = discoV1Test.users
 
 	users.insert_one(user_object)
 
