@@ -1,6 +1,8 @@
 from flask import Flask, redirect, request, url_for, session, render_template
 from flask_session import Session
 
+# from werkzeug.serving import WSGIRequestHandler
+
 from oauthlib.oauth2 import WebApplicationClient
 import requests
 
@@ -115,18 +117,54 @@ def index():
 	else:
 		return session["uuid"]
 
-@app.route("/internal/add_bookmark", methods=["POST"])
+@app.route("/internal/add_bookmark", methods=["GET", "POST"])
 def internal_add_bookmark():
-	if session.get("uuid"):
+	print(session)
+	if session.get("uuid") is not None:
+		print("hello!!")
 		bookmark_dict = {
-			"medName": "string",
-			"medInfo": "string",
-			"conditionName": "string",
-			"medContact": "string",
-			"publicationsUri": "string"
+			"medName": request.form["medName"],
+			"medInfo": request.form["medInfo"],
+			"conditionName": request.form["conditionName"],
+			"medContact": request.form["medContact"],
+			"publicationsUri": request.form["publicationsUri"]
 		}
+
+		pprint(request.form)
+
+		print(request.form["conditionName"])
+		print(request.form["medContact"])
+		print(request.form["medInfo"])
+		print(request.form["medName"])
+		print(request.form["publicationsUri"])
+
+
+
+
+
+		user = pymongo_client.discoV1Test.users.find_one({"uuid": session["uuid"]})
+
+		pprint(user)
+
+		saved_medication = user["savedMedication"]
+
+		med_exists = False
+		for existing_medication_dict in saved_medication:
+			if existing_medication_dict["medName"] == bookmark_dict["medName"]:
+				med_exists = True
+				break
+
+		if not med_exists:
+			saved_medication.append(bookmark_dict)
+
+		pymongo_client.discoV1Test.users.update_one({"uuid": session["uuid"]}, {"$set": {"savedMedication": saved_medication}})
+
+		pprint(pymongo_client.discoV1Test.users.find_one({"uuid": session["uuid"]}))
+
+
 		return "done", 200
 	else:
+		print("hello")
 		return "error", 500
 
 
@@ -145,7 +183,7 @@ def views_results():
 
 		viewed_drugs = []
 
-		processed_results = {"data":[]}
+		processed_results = {"query":request.form["condition"], "data":[]}
 		for item in results:
 
 			if item["id"] not in viewed_drugs:
@@ -239,4 +277,5 @@ def logout():
 	return redirect(url_for("index"))
 
 if __name__ == "__main__":
+	# WSGIRequestHandler.protocol_version = "HTTP/1.1"
 	app.run(debug=True, port=5000, ssl_context="adhoc")

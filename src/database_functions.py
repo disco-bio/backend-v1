@@ -1,10 +1,15 @@
+from datetime import datetime
+
+
 def create_user(mongo_client, uuid, email, name, photoUri):
 	user_object = {
 		"uuid": uuid,
 		"email": email,
 		"name": name,
 		"photoUri": photoUri,
-		"savedMedication": []
+		"savedMedication": [],
+		"dateCreated": datetime.utcnow(),
+		"dateModified": datetime.utcnow()
 	}
 
 	discoV1Test = mongo_client.discoV1Test
