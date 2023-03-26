@@ -1,5 +1,6 @@
-def create_user(mongo_client, email, name, photoUri):
+def create_user(mongo_client, uuid, email, name, photoUri):
 	user_object = {
+		"uuid": uuid,
 		"email": email,
 		"name": name,
 		"photoUri": photoUri,

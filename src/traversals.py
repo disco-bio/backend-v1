@@ -31,3 +31,9 @@ def dfs_until_drug(gremlin_client, condition_name):
 
 	# pprint(callback.result().all().result())
 	return True
+
+def traverse_from_condition_until_drug(local_client, condition_name=None):
+    _COMMAND = f"g.V().hasLabel('condition').has('id', '{condition_name}').repeat(out()).until(hasLabel('drug')).limit(20)"
+    callback = local_client.submitAsync(_COMMAND)
+    results = callback.result().all().result()
+    return results

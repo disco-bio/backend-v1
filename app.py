@@ -11,13 +11,48 @@ from dotenv import load_dotenv
 from gremlin_python.driver import client, serializer
 
 
-from src.traversals import dfs_until_drug
+from pprint import pprint
+
+from src.traversals import dfs_until_drug, traverse_from_condition_until_drug
 
 import os
 import json
 import sys
 
 load_dotenv()
+
+
+
+
+# # Quantum
+# from azure.quantum import Workspace
+
+# workspace = Workspace (
+#     subscription_id = os.getenv("QUANTUM_SUBSCRIPTION_ID"), 
+#     resource_group = os.getenv("QUANTUM_RESOURCE_GROUP"),   
+#     name = os.getenv("QUANTUM_NAME"),          
+#     location = os.getenv("QUANTUM_LOCATION")        
+#     )
+
+
+# from qiskit import QuantumCircuit, transpile, assemble
+# from qiskit.visualization import plot_histogram
+# from qiskit.tools.monitor import job_monitor
+# from azure.quantum.qiskit import AzureQuantumProvider
+
+# provider = AzureQuantumProvider(
+#   resource_id=os.getenv("QUANTUM_RESOURCE_ID"),
+#   location=os.getenv("QUANTUM_LOCATION")
+# )
+
+
+
+
+
+
+
+
+
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"]='1'
 
@@ -61,7 +96,12 @@ GREMLIN_PASSWORD = os.getenv("GREMLIN_PASSWORD")
 local_client = client.Client(GREMLIN_URI, "g", username=GREMLIN_USER, password=GREMLIN_PASSWORD, message_serializer=serializer.GraphSONSerializersV2d0())
 
 
-dfs_until_drug(local_client, "Malignant neoplasm of lung")
+# dfs_until_drug(local_client, "Malignant neoplasm of lung")
+
+
+
+
+# config quantum circuit
 
 
 
@@ -69,10 +109,33 @@ dfs_until_drug(local_client, "Malignant neoplasm of lung")
 
 @app.route("/")
 def index():
-	if not session.get("email"):
+	if not session.get("uuid"):
 		return render_template("index.html")
 	else:
-		return session["email"]
+		return session["uuid"]
+
+@app.route("/views/search")
+def views_search():
+	return render_template("search.html")
+
+
+@app.route("/views/results", methods=["GET", "POST"])
+def views_results():
+	if request.method == "POST":
+		print(request.form)
+		results = traverse_from_condition_until_drug(local_client, request.form["condition"])
+		pprint(results)
+
+
+		processed_results = {"data":[]}
+		for item in results:
+			temp_dict = {"drugName": item["id"]}
+			processed_results["data"].append(temp_dict)
+
+		return render_template("results.html", results=processed_results)
+	else:
+		return "User did not submit a valid POST request", 500
+
 
 @app.route("/login")
 def login():
@@ -126,13 +189,13 @@ def callback():
 
 	print(unique_id, users_email, users_name, users_photo_uri)
 
-	session["email"] = users_email
+	session["uuid"] = unique_id
 
 	return redirect(url_for("index"))
 
 @app.route("/logout")
 def logout():
-	session["email"] = None
+	session["uuid"] = None
 	return redirect(url_for("index"))
 
 if __name__ == "__main__":
