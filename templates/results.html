@@ -65,7 +65,7 @@
 
 		let bookmarkBody = {
 			"medName": rawItem.drugName,
-			"medInfo": "",
+			"medInfo": rawItem.medInfo,
 			"conditionName": serverResults.query,
 			"medContact": "",
 			"publicationsUri": serverResults.data[index].publicationsUri
@@ -87,11 +87,11 @@
 	}
 
 
-	function createCardHtml(drugName, publicationsUri, index) {
+	function createCardHtml(drugName, publicationsUri, medInfo, index) {
 		return `<div class="card discoResultCard">
 		<div class="card-body">
 		<h3>${drugName}</h3>
-		<p>Summary</p>
+		<p>${medInfo}</p>
 		<a class="btn btn-outline-secondary" href="${publicationsUri}" target="_blank">See publications</a>
 		<a class="btn btn-outline-secondary disabled">Contact researchers</a>
 		<a class="btn btn-outline-primary" onClick="addBookmark(${index})">Bookmark</a>
@@ -103,7 +103,7 @@
 
 
 	for (let i=0; i<serverResults.data.length; i++) {
-		document.getElementById("discoResults").innerHTML += createCardHtml(serverResults.data[i].drugName, serverResults.data[i].publicationsUri, i);
+		document.getElementById("discoResults").innerHTML += createCardHtml(serverResults.data[i].drugName, serverResults.data[i].publicationsUri, serverResults.data[i].medInfo, i);
 	}
 
 

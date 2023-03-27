@@ -17,6 +17,7 @@ from pprint import pprint
 
 from src.traversals import dfs_until_drug, traverse_from_condition_until_drug
 from src.database_functions import create_user
+from src.openai_functions import return_drug_summary
 
 import os
 import json
@@ -108,6 +109,9 @@ local_client = client.Client(GREMLIN_URI, "g", username=GREMLIN_USER, password=G
 
 
 
+# OPEN AI Setup
+OPENAI_KEY = os.getenv("OPENAI_KEY")
+
 
 
 @app.route("/")
@@ -190,6 +194,7 @@ def views_results():
 
 				temp_dict = {
 					"drugName": item["id"],
+					"medInfo": return_drug_summary(drug_name=item["id"], OPENAI_KEY=OPENAI_KEY),
 					"publicationsUri": f"https://pubmed.ncbi.nlm.nih.gov/?term={item['id']}"
 					}
 				processed_results["data"].append(temp_dict)
