@@ -69,7 +69,7 @@ GOOGLE_DISCOVERY_URL = (
 MONGODB_URI = os.getenv("MONGODB_URI")
 
 oauth_client = WebApplicationClient(GOOGLE_CLIENT_ID)
-pymongo_client = MongoClient()
+pymongo_client = MongoClient(MONGODB_URI)
 
 
 def get_google_provider_cfg():
