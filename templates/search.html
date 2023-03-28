@@ -8,16 +8,44 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
 	<style type="text/css">
+
+		#topPart {
+		    background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1660536754523-13d686a48178?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1457&q=80');
+	        height: 100vh;
+		    background-position: center;
+		    background-repeat: no-repeat;
+		    background-size: cover;
+		}
 		
 		#discoSearchForm{
 			width: 100% ;
-			padding: 5%;
+			padding-left: 5%;
+			padding-right: 5%;
+			padding-top: 3%;
+
 			/*margin-left: 50px;*/
 		}
 
 		.discoSearchInput {
 			width: 100% ;
+			height: 50px;
+			border-radius: 3px;
 		}
+
+		.discoShadow {
+			color: white;
+			text-shadow: 0px 0px 10px black;
+		}
+
+		#titleTop {
+			padding-top: 5%;
+		}
+
+		.discoSearchButton {
+			/*width: 15%;*/
+			/*min-width: 80px;*/
+		}
+
 
 
 
@@ -30,128 +58,134 @@
 </head>
 <body>
 
-<h1 style="text-align: center">Disco</h1>
+<div id="topPart">
 
-
-	<form id="discoSearchForm" action="/views/results" method="POST">
-
-		<!-- <div class="input-group mb-3"> -->
-
-
-			<input list="conditions" name="condition" class="discoSearchInput formControl">
-			<datalist id="conditions">
-				<option value="Salivary Gland Neoplasms">
-				<option value="Psychoses, Substance-Induced">
-				<option value="Zellweger Syndrome">
-				<option value="Psoriasis">
-				<option value="Nephrotic Syndrome">
-				<option value="Common Migraine">
-				<option value="Mouth Diseases">
-				<option value="MITOCHONDRIAL COMPLEX I DEFICIENCY">
-				<option value="Substance-Related Disorders">
-				<option value="Anemia, Hemolytic">
-				<option value="Rheumatoid Arthritis">
-				<option value="Arthritis, Psoriatic">
-				<option value="Anemia">
-				<option value="Cholangiocarcinoma">
-				<option value="Neuroendocrine Tumors">
-				<option value="Malaria">
-				<option value="Hyperhomocysteinemia">
-				<option value="Malaria">
-				<option value="HIV Infections">
-				<option value="Ankylosing spondylitis">
-				<option value="Adenoid Cystic Carcinoma">
-				<option value="Juvenile arthritis">
-				<option value="Neoplasms, Experimental">
-				<option value="Alopecia Areata">
-				<option value="Alopecia">
-				<option value="Bradycardia">
-				<option value="Common Variable Immunodeficiency">
-				<option value="Glomerulonephritis">
-				<option value="Alcoholic Intoxication, Chronic">
-				<option value="Lung Injury">
-					<!-- Skipped one value in between -->
-				<option value="Cerebrovascular accident">
-				<option value="Diaphragmatic Hernia">
-				<option value="Prostatic Intraepithelial Neoplasias">
-				<option value="Semilobar Holoprosencephaly">
-				<option value="Restless Legs Syndrome">
-				<option value="Brugada Syndrome (disorder)">
-				<option value="Pathological accumulation of air in tissues">
-				<option value="Head and Neck Neoplasms">
-				<option value="Brain Neoplasms">
-				<option value="Hearing Loss, Partial">
-				<option value="Chromosome Aberrations">
-				<option value="Chronic Lymphocytic Leukemia">
-				<option value="Refractive Errors">
-				<option value="Hepatitis C">
-				<option value="Mesothelioma">
-
-				<option value="Malignant neoplasm of lung">
-				<option value="Inflammatory dermatosis">
-				<option value="Kallmann Syndrome">
-				<option value="Lipoidosis">
-				<option value="Diabetes Mellitus">
-				<option value="Fibrosis">
-				<option value="Hypercholesterolemia">
-				<option value="Microcephaly">
-				<option value="Tongue Neoplasms">
-				<option value="Nephrosis">
-				<option value="Carotid Artery Diseases">
-				<option value="Growth Disorders">
-				<option value="Absence Epilepsy">
-				<option value="Epilepsy, Temporal Lobe">
-
-				<option value="Memory Disorders">
-				<option value="Catalepsy">
-				<option value="Hereditary Nonpolyposis Colorectal Cancer">
-				<option value="Acute Promyelocytic Leukemia">
-				<option value="Precursor B-Cell Lymphoblastic Leukemia-Lymphoma">
-				<option value="Gout">
-				<option value="Coronary Artery Disease">
-				<option value="Venous Thromboembolism">
-				<option value="Precancerous Conditions">
-
-				<option value="Crohn Disease">
-				<option value="Uterine Cervical Neoplasm">
-				<option value="Dyskinesia, Drug-Induced">
-				<option value="Creutzfeldt-Jakob disease">
-				<option value="Ataxia, Spinocerebellar">
-				<option value="Optic Atrophy, Hereditary, Leber">
-				<option value="Liver Cirrhosis, Alcoholic">
-				<option value="Acute Lung Injury">
-				<option value="Liver Cirrhosis, Experimental">
-				<option value="Chloracne">
-				<option value="Liver diseases">
-				<option value="Kidney Failure, Chronic">
-				<option value="Weight decreased">
-				<option value="Leigh Disease">
-
-				<option value="Celiac Disease">
-				<option value="Glaucoma">
-				<option value="Tachycardia">
-				<option value="Breast Cancer">
-				<option value="Ischemia">
-				<option value="Adenomatous Polyposis">
+	<div id="titleTop">
+		<h1 style="text-align: center; color:white;font-size: 72px;" class="discoShadow"><b>Disco</b></h1>
+		<p class="discoShadow" style="text-align: center; font-size: 24px;">A drug discovery platform, designed for <b>students</b>.</p>
+	</div>
 
 
 
-
-				<option value="Thyroid Diseases">
-				<option value="Panic Disorder">
-				<option value="Colorectal Neoplasms">
+		<form id="discoSearchForm" action="/views/results" method="POST">
 
 
+				<input list="conditions" name="condition" class="discoSearchInput form-control" placeholder="Type a term from the dropdown menu.">
+				<datalist id="conditions">
+					<option value="Salivary Gland Neoplasms">
+					<option value="Psychoses, Substance-Induced">
+					<option value="Zellweger Syndrome">
+					<option value="Psoriasis">
+					<option value="Nephrotic Syndrome">
+					<option value="Common Migraine">
+					<option value="Mouth Diseases">
+					<option value="MITOCHONDRIAL COMPLEX I DEFICIENCY">
+					<option value="Substance-Related Disorders">
+					<option value="Anemia, Hemolytic">
+					<option value="Rheumatoid Arthritis">
+					<option value="Arthritis, Psoriatic">
+					<option value="Anemia">
+					<option value="Cholangiocarcinoma">
+					<option value="Neuroendocrine Tumors">
+					<option value="Malaria">
+					<option value="Hyperhomocysteinemia">
+					<option value="HIV Infections">
+					<option value="Ankylosing spondylitis">
+					<option value="Adenoid Cystic Carcinoma">
+					<option value="Juvenile arthritis">
+					<option value="Neoplasms, Experimental">
+					<option value="Alopecia Areata">
+					<option value="Alopecia">
+					<option value="Bradycardia">
+					<option value="Common Variable Immunodeficiency">
+					<option value="Glomerulonephritis">
+					<option value="Alcoholic Intoxication, Chronic">
+					<option value="Lung Injury">
+						<!-- Skipped one value in between -->
+					<option value="Cerebrovascular accident">
+					<option value="Diaphragmatic Hernia">
+					<option value="Prostatic Intraepithelial Neoplasias">
+					<option value="Semilobar Holoprosencephaly">
+					<option value="Restless Legs Syndrome">
+					<option value="Brugada Syndrome (disorder)">
+					<option value="Pathological accumulation of air in tissues">
+					<option value="Head and Neck Neoplasms">
+					<option value="Brain Neoplasms">
+					<option value="Hearing Loss, Partial">
+					<option value="Chromosome Aberrations">
+					<option value="Chronic Lymphocytic Leukemia">
+					<option value="Refractive Errors">
+					<option value="Hepatitis C">
+					<option value="Mesothelioma">
 
-			</datalist>
-			<br><br>
+					<option value="Malignant neoplasm of lung">
+					<option value="Inflammatory dermatosis">
+					<option value="Kallmann Syndrome">
+					<option value="Lipoidosis">
+					<option value="Diabetes Mellitus">
+					<option value="Fibrosis">
+					<option value="Hypercholesterolemia">
+					<option value="Microcephaly">
+					<option value="Tongue Neoplasms">
+					<option value="Nephrosis">
+					<option value="Carotid Artery Diseases">
+					<option value="Growth Disorders">
+					<option value="Absence Epilepsy">
+					<option value="Epilepsy, Temporal Lobe">
 
-			<center><button type="submit" class="btn btn-primary" style="width: 100px;">Search</button></center>
+					<option value="Memory Disorders">
+					<option value="Catalepsy">
+					<option value="Hereditary Nonpolyposis Colorectal Cancer">
+					<option value="Acute Promyelocytic Leukemia">
+					<option value="Precursor B-Cell Lymphoblastic Leukemia-Lymphoma">
+					<option value="Gout">
+					<option value="Coronary Artery Disease">
+					<option value="Venous Thromboembolism">
+					<option value="Precancerous Conditions">
 
-		<!-- </div> -->
+					<option value="Crohn Disease">
+					<option value="Uterine Cervical Neoplasm">
+					<option value="Dyskinesia, Drug-Induced">
+					<option value="Creutzfeldt-Jakob disease">
+					<option value="Ataxia, Spinocerebellar">
+					<option value="Optic Atrophy, Hereditary, Leber">
+					<option value="Liver Cirrhosis, Alcoholic">
+					<option value="Acute Lung Injury">
+					<option value="Liver Cirrhosis, Experimental">
+					<option value="Chloracne">
+					<option value="Liver diseases">
+					<option value="Kidney Failure, Chronic">
+					<option value="Weight decreased">
+					<option value="Leigh Disease">
+
+					<option value="Celiac Disease">
+					<option value="Glaucoma">
+					<option value="Tachycardia">
+					<option value="Breast Cancer">
+					<option value="Ischemia">
+					<option value="Adenomatous Polyposis">
 
 
-	</form>
+
+
+					<option value="Thyroid Diseases">
+					<option value="Panic Disorder">
+					<option value="Colorectal Neoplasms">
+
+
+
+				</datalist>
+				<br><br>
+
+				<div class="d-grid gap-2">
+					<center><button type="submit" class="btn btn-light btn-lg discoSearchButton" style="width: 100px;">Search</button></center>
+				</div>
+
+			<!-- </div> -->
+
+
+		</form>
+	</div>
 
 
 </body>

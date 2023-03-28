@@ -17,6 +17,14 @@
 			margin-bottom: 10px;
 		}
 
+		#discoResultsDiv {
+			padding-top: 3%;
+			padding-left: 3%;
+			padding-right: 3%;
+
+
+		}
+
 		#discoResults {
 			padding-left: 3%;
 			padding-right: 3%;
@@ -26,7 +34,8 @@
 			padding-left: 3%;
 			padding-right: 3%;
 			padding-top: 3%;
-			padding-bottom: 5%;
+			padding-bottom: 1%;
+			/*padding-bottom: 5%;*/
 		}
 
 		.btn {
@@ -42,8 +51,12 @@
 
 
 <div id="discoResultsPageHeading">
-	<h1>Results</h1>
+	<h1>Results for <span id="searchConditionName"></span></h1>
+	<a href="/views/search" class="btn btn-outline-primary btn-sm">< New Search</a>
+	<p>Drug descriptions are generated from GPT-3. All results are exploratory in nature, and does not constitute medical advice.</p>
+
 </div>
+
 
 <div id="discoResults">
 </div>
@@ -105,6 +118,8 @@
 	for (let i=0; i<serverResults.data.length; i++) {
 		document.getElementById("discoResults").innerHTML += createCardHtml(serverResults.data[i].drugName, serverResults.data[i].publicationsUri, serverResults.data[i].medInfo, i);
 	}
+
+	document.getElementById("searchConditionName").innerHTML += serverResults.query
 
 
 </script>
