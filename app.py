@@ -127,6 +127,11 @@ def index():
 		results["isLoggedIn"] = "true"
 		return render_template("search.html", results=results)
 
+
+@app.route("/survey")
+def survey():
+	return render_template("survey.html")
+
 @app.route("/internal/add_bookmark", methods=["GET", "POST"])
 def internal_add_bookmark():
 	print(session)
