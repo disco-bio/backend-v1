@@ -117,7 +117,7 @@ OPENAI_KEY = os.getenv("OPENAI_KEY")
 @app.route("/")
 def index():
 	if not session.get("uuid"):
-		return render_template("index.html")
+		return render_template("search.html")
 	else:
 		return session["uuid"]
 
@@ -141,10 +141,6 @@ def internal_add_bookmark():
 		print(request.form["medInfo"])
 		print(request.form["medName"])
 		print(request.form["publicationsUri"])
-
-
-
-
 
 		user = pymongo_client.discoV1Test.users.find_one({"uuid": session["uuid"]})
 
