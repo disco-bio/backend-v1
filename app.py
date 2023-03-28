@@ -116,10 +116,16 @@ OPENAI_KEY = os.getenv("OPENAI_KEY")
 
 @app.route("/")
 def index():
+
+	results = {
+		"isLoggedIn": "false"
+	}
+
 	if not session.get("uuid"):
-		return render_template("search.html")
+		return render_template("search.html", results=results)
 	else:
-		return session["uuid"]
+		results["isLoggedIn"] = "true"
+		return render_template("search.html", results=results)
 
 @app.route("/internal/add_bookmark", methods=["GET", "POST"])
 def internal_add_bookmark():
@@ -200,6 +206,11 @@ def views_results():
 
 
 		pprint(processed_results)
+
+		if session.get("uuid") is not None:
+			processed_results["isLoggedIn"] = "true"
+		else:
+			processed_results["isLoggedIn"] = "false"
 		
 		return render_template("results.html", results=processed_results)
 	else:

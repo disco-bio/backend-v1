@@ -36,6 +36,26 @@
 </head>
 <body>
 
+	
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><b>Disco</b></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/views/personal_dashboard">My Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 <div id="discoResultsPageHeading">
 	<h1>Personal Dashboard</h1>
 </div>
@@ -49,12 +69,12 @@
 
 	const savedMedication = {{saved_medication | safe}}
 
-	function createCardHtml(drugName, publicationsUri, conditionName) {
+	function createCardHtml(drugName, publicationsUri, conditionName, medInfo) {
 		return `<div class="card discoResultCard">
 		<div class="card-body">
 		<h3>${drugName}</h3>
 		<p><i>${conditionName}</i></p>
-		<p>Summary</p>
+		<p>${medInfo}</p>
 		<a class="btn btn-outline-secondary" href="${publicationsUri}" target="_blank">See publications</a>
 		<a class="btn btn-outline-secondary disabled">Contact researchers</a>
 
@@ -63,7 +83,7 @@
 	}
 
 	for (let i=0; i<savedMedication.length; i++) {
-		document.getElementById("discoMedicationResults").innerHTML += createCardHtml(savedMedication[i].medName, savedMedication[i].publicationsUri, savedMedication[i].conditionName)
+		document.getElementById("discoMedicationResults").innerHTML += createCardHtml(savedMedication[i].medName, savedMedication[i].publicationsUri, savedMedication[i].conditionName, savedMedication[i].medInfo)
 	}
 
 </script>

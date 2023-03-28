@@ -38,6 +38,11 @@
 			/*padding-bottom: 5%;*/
 		}
 
+		#discoCardAlert {
+			padding-left: 3%;
+			padding-right: 3%;
+		}
+
 		.btn {
 			margin: 3px;
 		}
@@ -48,13 +53,17 @@
 </head>
 <body>
 
-
+<div id="discoInsertNavbar">
+</div>
 
 <div id="discoResultsPageHeading">
 	<h1>Results for <span id="searchConditionName"></span></h1>
-	<a href="/views/search" class="btn btn-outline-primary btn-sm">< New Search</a>
+	<a href="/views/search" class="btn btn-outline-secondary btn-sm">< New Search</a>
 	<p>Drug descriptions are generated from GPT-3. All results are exploratory in nature, and does not constitute medical advice.</p>
 
+</div>
+
+<div id="discoCardAlert">
 </div>
 
 
@@ -64,10 +73,74 @@
 <script type="text/javascript">
 	const serverResults = {{results | safe}}
 	console.log(serverResults);
+	
+	const serverData = {{results|safe}}
+	console.log(serverData);
 
-	function printSomething() {
-		console.log("hi!")
+	function generateLoggedInNavbarHtml() {
+		const html = `
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			  <div class="container-fluid">
+			    <a class="navbar-brand" href="/"><b>Disco</b></a>
+			    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			      <span class="navbar-toggler-icon"></span>
+			    </button>
+			    <div class="collapse navbar-collapse" id="navbarNav">
+			      <ul class="navbar-nav">
+			        <li class="nav-item">
+			          <a class="nav-link" href="/views/personal_dashboard">My Dashboard</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link" href="/logout">Logout</a>
+			        </li>
+			      </ul>
+			    </div>
+			  </div>
+			</nav>`;
+	return html;
 	}
+
+	function generateLoggedOutNavbarHtml() {
+		const html = `
+			<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			  <div class="container-fluid">
+			    <a class="navbar-brand" href="/"><b>Disco</b></a>
+			    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			      <span class="navbar-toggler-icon"></span>
+			    </button>
+			    <div class="collapse navbar-collapse" id="navbarNav">
+			      <ul class="navbar-nav">
+			        <li class="nav-item">
+			          <a class="nav-link" href="/login">Login</a>
+			        </li>
+			      </ul>
+			    </div>
+			  </div>
+			</nav>`;
+		return html;
+	}
+
+
+
+	function createLogInAlerCardtHtml() {
+		const html=`<div class="card border-primary">
+			<div class="card-body text-primary">
+				<h5 class="card-title">Log in for More Functionality</h5>
+				<div class="card-text"><p>Log in with your Google Account to bookmark relevant results.</p><center><a class="btn btn-primary" href="/login">Log In</a></center></div>
+			</div>
+		</div>`
+		return html
+	}
+
+	if (serverData.isLoggedIn === "true") {
+		document.getElementById("discoInsertNavbar").innerHTML = generateLoggedInNavbarHtml();
+	}
+
+	else {
+		document.getElementById("discoInsertNavbar").innerHTML = generateLoggedOutNavbarHtml();
+		document.getElementById("discoCardAlert").innerHTML = createLogInAlerCardtHtml();
+		}
+
 
 
 	function addBookmark(index) {
@@ -85,18 +158,6 @@
 		}
 
 		$.post("/internal/add_bookmark", bookmarkBody);
-
-		// $.ajax({
-		//   type: "post",
-		//   dataType: "json",
-		//   contentType: "application/json",
-		//   url: "/internal/add_bookmark",
-		//   data: bookmarkBody,
-	 //      error: function( jqXhr, textStatus, errorThrown ){
-		//     console.log( errorThrown );
-		// 	}
-		// });
-
 	}
 
 
