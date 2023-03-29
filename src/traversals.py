@@ -197,13 +197,34 @@ def traverse_from_condition_until_drug(local_client, condition_name=None):
 
 
 
+
+
+
+
+
+
+def quantum_traversal_2_qubit_wrapper(gremlin_client, quantum_provider, condition_name):
+
+	q_obj = QuantumStoppingTracker(quantum_provider)
+
+	thread_1 = Thread(target=dfs_until_drug_with_quantum, args=(gremlin_client, condition_name, q_obj, {"0": True, "1": False}))
+	thread_2 = Thread(target=dfs_until_drug_with_quantum, args=(gremlin_client, condition_name, q_obj, {"0": False, "1": True}))
+
+	thread_1.start()
+	thread_2.start()
+
+	thread_1.join()
+	thread_2.join()
+
+	return q_obj.results
+
+
+
+
+
+
+
 if __name__ == "__main__":
-
-
-
-
-
-
 
 	# Gremlin DB config
 

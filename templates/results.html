@@ -25,6 +25,12 @@
 
 		}
 
+		#discoQuantumResults {
+			padding-left: 3%;
+			padding-right: 3%;
+		}
+
+
 		#discoResults {
 			padding-left: 3%;
 			padding-right: 3%;
@@ -53,6 +59,7 @@
 </head>
 <body>
 
+
 <div id="discoInsertNavbar">
 </div>
 
@@ -66,6 +73,9 @@
 <div id="discoCardAlert">
 </div>
 
+
+<div id="discoQuantumResults">
+</div>
 
 <div id="discoResults">
 </div>
@@ -180,6 +190,23 @@
 	}
 
 
+	function createQuantumCardHtml(drugName, publicationsUri, medInfo, index) {
+		return `<div class="card discoResultCard border-primary">
+		<div class="card-body text-primary">
+		<span class="badge bg-primary">Quantum Boost</span>
+		<br>
+
+		<h3>${drugName}</h3>
+		<p>${medInfo}</p>
+		<a class="btn btn-outline-secondary" href="${publicationsUri}" target="_blank">See publications</a>
+		<a class="btn btn-outline-secondary disabled">Contact researchers</a>
+		<a class="btn btn-outline-primary disabled" onClick="addBookmark(${index})">Bookmark</a>
+
+		</div>
+		</div>`
+	}
+
+
 
 	for (let i=0; i<serverResults.data.length; i++) {
 		document.getElementById("discoResults").innerHTML += createCardHtml(serverResults.data[i].drugName, serverResults.data[i].publicationsUri, serverResults.data[i].medInfo, i);
@@ -187,6 +214,20 @@
 
 	document.getElementById("searchConditionName").innerHTML += serverResults.query
 
+
+
+	// call Quantum computing
+
+	let postBody = {
+		"conditionName": serverResults.query
+	}
+
+	$.post("/internal/quantum_compute", postBody, function(data) {
+		console.log("post returned data");
+		console.log(data);
+		document.getElementById("discoQuantumResults").innerHTML += createQuantumCardHtml(data[0].drugName, data[0].publicationsUri, data[0].medInfo, null);
+		console.log("html added!")
+	})
 
 </script>
 

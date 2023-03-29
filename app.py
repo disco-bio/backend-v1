@@ -15,7 +15,7 @@ from gremlin_python.driver import client, serializer
 
 from pprint import pprint
 
-from src.traversals import dfs_until_drug, traverse_from_condition_until_drug
+from src.traversals import dfs_until_drug, traverse_from_condition_until_drug, quantum_traversal_2_qubit_wrapper, QuantumStoppingTracker
 from src.database_functions import create_user
 from src.openai_functions import return_drug_summary
 
@@ -28,7 +28,7 @@ load_dotenv()
 
 
 
-# # Quantum
+# Quantum
 # from azure.quantum import Workspace
 
 # workspace = Workspace (
@@ -39,20 +39,23 @@ load_dotenv()
 #     )
 
 
-# from qiskit import QuantumCircuit, transpile, assemble
-# from qiskit.visualization import plot_histogram
-# from qiskit.tools.monitor import job_monitor
-# from azure.quantum.qiskit import AzureQuantumProvider
+from qiskit import QuantumCircuit, transpile, assemble
+from qiskit.visualization import plot_histogram
+from qiskit.tools.monitor import job_monitor
+from azure.quantum.qiskit import AzureQuantumProvider
 
-# provider = AzureQuantumProvider(
-#   resource_id=os.getenv("QUANTUM_RESOURCE_ID"),
-#   location=os.getenv("QUANTUM_LOCATION")
-# )
-
-
+quantum_provider = AzureQuantumProvider(
+  resource_id=os.getenv("QUANTUM_RESOURCE_ID"),
+  location=os.getenv("QUANTUM_LOCATION")
+)
 
 
 
+
+# Quantum warmup
+
+q_obj = QuantumStoppingTracker(quantum_provider)
+q_obj.compute_quantum()
 
 
 
@@ -97,10 +100,10 @@ GREMLIN_PASSWORD = os.getenv("GREMLIN_PASSWORD")
 # if sys.platform == "win32":
     # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-local_client = client.Client(GREMLIN_URI, "g", username=GREMLIN_USER, password=GREMLIN_PASSWORD, message_serializer=serializer.GraphSONSerializersV2d0())
+gremlin_client = client.Client(GREMLIN_URI, "g", username=GREMLIN_USER, password=GREMLIN_PASSWORD, message_serializer=serializer.GraphSONSerializersV2d0())
 
 
-# dfs_until_drug(local_client, "Malignant neoplasm of lung")
+# dfs_until_drug(gremlin_client, "Malignant neoplasm of lung")
 
 
 
@@ -117,6 +120,8 @@ OPENAI_KEY = os.getenv("OPENAI_KEY")
 @app.route("/")
 def index():
 
+	print("accessing route: '/'")
+
 	results = {
 		"isLoggedIn": "false"
 	}
@@ -131,6 +136,34 @@ def index():
 @app.route("/survey")
 def survey():
 	return render_template("survey.html")
+
+
+@app.route("/internal/quantum_compute", methods=["GET", "POST"])
+def internal_quantum_compute():
+
+	print(request.form)
+
+
+	results = quantum_traversal_2_qubit_wrapper(gremlin_client, quantum_provider, request.form["conditionName"])
+
+	print(results)
+
+	new_results = []
+
+	for item in results:
+		if item not in new_results:
+
+
+			temp_dict = {
+				"drugName": item["inV"],
+				"medInfo": return_drug_summary(drug_name=item["inV"], OPENAI_KEY=OPENAI_KEY),
+				"publicationsUri": f"https://pubmed.ncbi.nlm.nih.gov/?term={item['inV']}"
+				}
+
+			new_results.append(temp_dict)
+
+	return new_results
+
 
 @app.route("/internal/add_bookmark", methods=["GET", "POST"])
 def internal_add_bookmark():
@@ -188,7 +221,7 @@ def views_search():
 def views_results():
 	if request.method == "POST":
 		print(request.form)
-		results = traverse_from_condition_until_drug(local_client, request.form["condition"])
+		results = traverse_from_condition_until_drug(gremlin_client, request.form["condition"])
 		pprint(results)
 
 
@@ -310,4 +343,4 @@ def logout():
 
 if __name__ == "__main__":
 	# WSGIRequestHandler.protocol_version = "HTTP/1.1"
-	app.run(debug=True, port=5000, ssl_context="adhoc")
+	app.run(debug=False, port=5000, ssl_context="adhoc")
