@@ -18,6 +18,8 @@ from pprint import pprint
 from src.traversals import dfs_until_drug, traverse_from_condition_until_drug, quantum_traversal_2_qubit_wrapper, QuantumStoppingTracker
 from src.database_functions import create_user
 from src.openai_functions import return_drug_summary
+from src import translate
+
 
 import os
 import json
@@ -54,8 +56,8 @@ quantum_provider = AzureQuantumProvider(
 
 # Quantum warmup
 
-q_obj = QuantumStoppingTracker(quantum_provider)
-q_obj.compute_quantum()
+# q_obj = QuantumStoppingTracker(quantum_provider)
+# q_obj.compute_quantum()
 
 
 
@@ -120,10 +122,16 @@ OPENAI_KEY = os.getenv("OPENAI_KEY")
 @app.route("/")
 def index():
 
+	lang_code = request.args.get("lang")
+
+	if lang_code is None:
+		lang_code="None"
+
 	print("accessing route: '/'")
 
 	results = {
-		"isLoggedIn": "false"
+		"isLoggedIn": "false",
+		"langCode": lang_code
 	}
 
 	if not session.get("uuid"):
@@ -163,6 +171,25 @@ def internal_quantum_compute():
 			new_results.append(temp_dict)
 
 	return new_results
+
+@app.route("/internal/translate", methods=["GET", "POST"])
+def internal_translate():
+
+	print(request.form)
+
+	client_text = request.form["clientText"]
+	client_lang_code = request.form["clientLangCode"]
+
+	translated_text = translate.translate(
+		text=client_text,
+		language_to=client_lang_code
+		)[0]["translations"][0]["text"]
+
+	return_dict = {
+		"data": translated_text
+	}
+
+	return return_dict
 
 
 @app.route("/internal/add_bookmark", methods=["GET", "POST"])

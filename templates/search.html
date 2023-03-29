@@ -10,6 +10,9 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+
 	<style type="text/css">
 
 		html{
@@ -139,7 +142,9 @@
 
 	<div id="titleTop">
 		<h1 style="text-align: center; color:white;font-size: 72px;" class="discoShadow"><b>Disco</b></h1>
-		<p class="discoShadow" style="text-align: center; font-size: 24px;">A drug discovery platform, designed for <b>students</b>.</p>
+		<p class="discoShadow" style="text-align: center; font-size: 24px;">
+			<span id="t-1">A drug discovery platform, designed for <b>students</b>.</span>
+		</p>
 
 	</div>
 
@@ -256,7 +261,7 @@
 				<br><br>
 
 				<div class="d-grid gap-2">
-					<center><button type="submit" class="btn btn-light btn-lg discoSearchButton" style="width: 100px;">Search</button></center>
+					<center><button type="submit" class="btn btn-light btn-lg discoSearchButton" style="width: 100px;"><span id="t-6">Search</span></button></center>
 				</div>
 
 			<!-- </div> -->
@@ -265,60 +270,60 @@
 		</form>
 
 
-		<center><p style="color:white" class="discoShadow" id="whatIsDisco">&darr; Learn more</p></center>
+		<center><p style="color:white" class="discoShadow" id="whatIsDisco">&darr; <span id="t-2">Learn more</span></p></center>
 
 	</div>
 
 	<div id="discoAbout">
-		<h2>Empowering Students around the Planet to Solve Biology</h2>
-		<p>All disease can be cured, given the correct tools.</p>
-		<p>Disco identifies potential treatments to treat incurable diseases, in less than 60 seconds.</p>
+		<h2><span id="t-3">Empowering Students around the Planet to Solve Biology</span></h2>
+		<p><span id="t-4">All disease can be cured, given the correct tools.</span></p>
+		<p><span id="t-5">Disco identifies potential treatments to treat incurable diseases, in less than 60 seconds.</span></p>
 		<br>
-		<h2>Drug Discovery is Expensive</h2>
-		<p>It costs upwards of one billion dollars, and three to twenty years on average, for researchers to identify promising medication candidates.</p>
-		<p>Disco aims to chagne this, by empowering students with the ability to identify new potential treatments for pressing diseases, for free, within seconds.</p>
+		<h2><span id="t-7">Drug Discovery is Expensive</span></h2>
+		<p><span id="t-8">It costs upwards of one billion dollars, and three to twenty years on average, for researchers to identify promising medication candidates.</span></p>
+		<p><span id="t-9">Disco aims to chagne this, by empowering students with the ability to identify new potential treatments for pressing diseases, for free, within seconds.</span></p>
 		<br>
-		<h2>Powerful Tech Core</h2>
-		<p>Disco traces how a specific disease affects certain genes, and subsequently associates these genes to a medication target.</p>
-		<p>Disco combines three different datasets, and when fully uploaded, will incorporate 500+ diseases, 800+ genes, and 19,000+ gene-drug relationships.</p>
-		<p>Current development is focused on leveraging quantum computing with traditional neural networks, to more rapidly traverse Disco's database and better recognize promising treatment.</p>
+		<h2><span id="t-10">Powerful Tech Core</span></h2>
+		<p><span id="t-11">Disco traces how a specific disease affects certain genes, and subsequently associates these genes to a medication target.</span></p>
+		<p><span id="t-12">Disco combines three different datasets, and when fully uploaded, will incorporate 500+ diseases, 800+ genes, and 19,000+ gene-drug relationships.</span></p>
+		<p><span id="t-13">Current development is focused on leveraging quantum computing with traditional neural networks, to more rapidly traverse Disco's database and better recognize promising treatment.</span></p>
 		<br>
-		<h2>Join the Community</h2>
-		<p>Be the first to learn about new features and project opportunities.</p>
+		<h2><span id="t-14">Join the Community</span></h2>
+		<p><span id="t-15">Be the first to learn about new features and project opportunities.</span></p>
 		<a class="btn btn-dark" href="https://discord.com/invite/MFmevzFW?fbclid=IwAR3Ukk_GQVfYqCbjG-U_gthlaLQht83Wu3_4MUSF4iB5mQDjawNW5dOgBrE" target="_blank">Discord</a>
 	</div>
 	<div id="discoVersions">
-		<h2>Development History</h2>
+		<h2><span id="t-16">Development History</span></h2>
 		<br>
-		<h5>v0.1 Initial Release (January 2023)</h5>
+		<h5><span id="t-17">v0.1 Initial Release (January 2023)</span></h5>
 		<ul>
-			<li>Implemented graph traversals</li>
-			<li>Proof of Concept with Grover's algorithm (3 qubits) to sort results</li>
+			<li><span id="t-18">Implemented graph traversals</span></li>
+			<li><span id="t-19">Proof of Concept with Grover's algorithm (3 qubits) to sort results</span></li>
 		</ul>
-		<h5>v1.0 Cloud Deployment (March 2023)</h5>
+		<h5><span id="t-20">v1.0 Cloud Deployment (March 2023)</span></h5>
 		<ul>
-			<li>Web app deployed to cloud</li>
-			<li>Users can create accounts to bookmark relevant results</li>
+			<li><span id="t-21">Web app deployed to cloud</span></li>
+			<li><span id="t-22">Users can create accounts to bookmark relevant results</span></li>
 		</ul>
-		<h5>v1.1 Quantum Boost (planned, April 2023)</h5> 
+		<h5><span id="t-23">v1.1 Quantum Boost (planned, April 2023)</span></h5> 
 		<ul>
-			<li>Quantum results complement silicon computer results</li>
-			<li>Implement quantum algorithms to simulate near-simultaneous traverse the dataset</li>
-			<li>Train neural networks to improve graph traversal heuristics</li>
+			<li><span id="t-24">Quantum results complement silicon computer results</span></li>
+			<li><span id="t-25">Implement quantum algorithms to simulate near-simultaneous traverse the dataset</span></li>
+			<li><span id="t-26">Train neural networks to improve graph traversal heuristics</span></li>
 		</ul>
-		<h5>v2.0 Quantum Boost+ (planned, Fall 2023)</h5> 
+		<h5><span id="t-27">v2.0 Quantum Boost+ (planned, Fall 2023)</span></h5> 
 		<ul>
-			<li>Quantum-first results</li>
-			<li>Transpose existing dataset on a quantum computer for near-simultaneous traversals</li>
+			<li><span id="t-28">Quantum-first results</span></li>
+			<li><span id="t-29">Transpose existing dataset on a quantum computer for near-simultaneous traversals</span></li>
 		</ul>
 	</div>
 	<div id="discoAuthor">
-		<h2>Who is Building Disco?</h2>
+		<h2><span id="t-30">Who is Building Disco?</span></h2>
 		<br>
-		<h5>Hi! I'm Laurence Liang,</h5>
-		<p>I'm an engineering student at McGill University (Canada) and a data scientist at Perceive Now.</p>
-		<p>During high school, I became interested in genetics while working on a science fair project, and I've always wanted to build larger genomic models which can provide more insight on how cells work. Through Disco, I hope to combine this personal curiosity with a larger community, one where we can collectively use computers to identify treatments for the planet's most pressing diseases.</p>
-		<p>Please feel free to reach out at laurence.liang [at] mail.mcgill.ca .</p>
+		<h5><span id="t-31">Hi! I'm Laurence Liang,</span></h5>
+		<p><span id="t-32">I'm an engineering student at McGill University (Canada) and a data scientist at Perceive Now.</span></p>
+		<p><span id="t-33">During high school, I became interested in genetics while working on a science fair project, and I've always wanted to build larger genomic models which can provide more insight on how cells work. Through Disco, I hope to combine this personal curiosity with a larger community, one where we can collectively use computers to identify treatments for the planet's most pressing diseases.</span></p>
+		<p><span id="t-34">Please feel free to reach out at</span> laurence.liang [at] mail.mcgill.ca .</p>
 	</div>
 
 	<script type="text/javascript">
@@ -381,6 +386,28 @@
 
 		else {
 			document.getElementById("discoInsertNavbar").innerHTML += generateLoggedOutNavbarHtml();
+ 		}
+
+ 		const span_ids = ["t-1", "t-2", "t-3", "t-4", "t-5", "t-6", "t-7", "t-8", "t-9", "t-10", "t-11", "t-12", "t-13", "t-14", "t-15", "t-16",
+ 		"t-17", "t-18", "t-19", "t-20", "t-21", "t-22", "t-23", "t-24", "t-25", "t-26", "t-27", "t-28", "t-29", "t-30", "t-31", "t-32", "t-33", "t-34"]
+
+ 		for (let i=0; i<span_ids.length; i++) {
+ 			const spanInnerText = document.getElementById(span_ids[i]).innerText;
+ 			console.log(spanInnerText);
+
+ 			let postBody = {
+ 				"clientText": spanInnerText,
+ 				"clientLangCode": serverData.langCode
+ 			}
+
+ 			console.log("postBody");
+ 			console.log(postBody);
+
+ 			$.post("/internal/translate", postBody, function(data) {
+ 				console.log(data);
+ 				document.getElementById(span_ids[i]).innerText = data.data
+ 			})
+
  		}
 
 	</script>
